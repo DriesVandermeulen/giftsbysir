@@ -1,6 +1,6 @@
 Meteor.startup(function () {
     Meteor.users.remove({});
-
+    //dsdsdsddsdsdssd
     if (Meteor.users.find().count() === 0) {
         var users = [
             {name:"Dries",email:"dries@giftsbysir.com",roles:['admin']},
