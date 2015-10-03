@@ -1,0 +1,9 @@
+<template name="home">
+    <div class="center-containe align-center">
+        <h1>You are logged in!</h1>
+        {{#if isAdmin}}
+            <h2>Admin</h2>
+        {{/if}}
+        <a class="button logout">Logout</a>
+    </div>
+</template>

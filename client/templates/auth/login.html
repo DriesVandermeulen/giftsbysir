@@ -1,0 +1,35 @@
+<template name="login">
+    <div class="header align-center">
+        <a href="{{pathFor '/login'}}">
+            <img src="img/logo-black.png" />
+        </a>
+    </div>
+    <div class="center-container">
+        <form>
+            {{#if errorMessages}}
+                <div class="auth-errors">
+                    <ul>
+                        {{#each errorMessages}}
+                            <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/if}}
+            <!--<label for="email" class="font-weight-light">Email</label>-->
+            <input type="email" name="email" class="u-full-width" placeholder="Your email">
+            <!--<label for="password" class="font-weight-light">Password</label>-->
+            <input type="password" name="password" class="u-full-width" placeholder="Password">
+            <div>
+                <a href="#" id="login" class="button button-primary u-full-width no-margin">Login</a>
+            </div>
+            <div class="align-center">or</div>
+            <div>
+                <a href="#" id="login-facebook" class="button button-primary button-facebook u-full-width">Login with Facebook</a>
+            </div>
+            <hr>
+            <div>
+                <a href="{{pathFor '/signup'}}" class="button u-full-width">Signup</a>
+            </div>
+        </form>
+    </div>
+</template>

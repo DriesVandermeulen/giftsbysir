@@ -1,0 +1,48 @@
+<template name="layoutUser">
+    {{#if currentUser}}
+        {{> Template.dynamic template=content}}
+    {{else}}
+        {{#if loggingIn}}
+            {{> loading}}
+        {{else}}
+            {{> notAuthorized}}
+        {{/if}}
+    {{/if}}
+</template>
+
+<template name="layoutAdmin">
+    {{#if currentUser}}
+        {{#if isAdmin}}
+            {{> adminSidebar}}
+            {{> Template.dynamic template=content}}
+        {{else}}
+            {{> notAuthorized}}
+        {{/if}}
+    {{else}}
+        {{#if loggingIn}}
+            {{> loading}}
+        {{else}}
+            {{> notAuthorized}}
+        {{/if}}
+    {{/if}}
+</template>
+
+<template name="layout">
+    {{> Template.dynamic template=content}}
+</template>
+
+<template name="loading">
+    <div>Loading...</div>
+</template>
+
+<template name="verifyAccount">
+    <div>Please verify your account!</div>
+</template>
+
+<template name="notFound">
+    <div>Not found</div>
+</template>
+
+<template name="notAuthorized">
+    <div>Not authorized</div>
+</template>

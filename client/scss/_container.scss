@@ -1,0 +1,10 @@
+$sir-center-container-width: 400px;
+
+.header {
+    margin: $sir-margin*2 0;
+}
+.center-container {
+    width: $sir-center-container-width;
+    margin: 0 auto;
+    padding: $sir-padding
+}

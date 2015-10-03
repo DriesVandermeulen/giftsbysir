@@ -1,0 +1,28 @@
+a.button.button-primary.button-facebook {
+    background-color: $sir-facebook-color;
+    border-color: $sir-facebook-color;
+
+    &:hover {
+        background-color: $sir-facebook-hover-color;
+        border-color: $sir-facebook-hover-color;
+    }
+}
+
+.auth-errors {
+    border: 1px solid #FC8363;
+    margin-bottom: $sir-margin;
+
+    ul {
+        margin-left: $sir-margin*2;
+        margin-bottom: 0;
+        color: #FC8363;
+
+        li {
+            list-style: square;
+
+            &:first-child {
+                margin-top: 1rem;
+            }
+        }
+    }
+}
