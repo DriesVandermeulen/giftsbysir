@@ -1,3 +1,4 @@
+
 Meteor.startup(function () {
     Meteor.users.remove({});
 
@@ -26,4 +27,7 @@ Meteor.startup(function () {
 
         });
     }
+
+    
+
 });

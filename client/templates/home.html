@@ -6,4 +6,23 @@
         {{/if}}
         <a class="button logout">Logout</a>
     </div>
+    <div class="center-containe align-center">
+        <h3>Search Gifts Primary Tag:</h3>
+        <input type="text" name="primaryTag" class="u-full-width" placeholder="Primary Tag">
+        <a href="#" id="searchPrimary" class="button button-primary u-full-width no-margin">Search</a>
+        
+    </div>
+    <div class="center-containe align-center">
+        <h3>Search Gifts Secondary Tag:</h3>
+        <input type="text" name="secondaryTag" class="u-full-width" placeholder="Secondary Tag">
+        <a href="#" id="searchSecondary" class="button button-primary u-full-width no-margin">Search</a>
+    </div>
+    {{#if searchPrimary}}
+        <div class="center-containe align-center">
+        <h3>Found gifts:</h3>
+        {{displayArray}}
+    	</div>
+    {{/if}}
+    
 </template>
+
