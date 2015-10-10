@@ -6,23 +6,46 @@
         {{/if}}
         <a class="button logout">Logout</a>
     </div>
-    <div class="center-containe align-center">
-        <h3>Search Gifts Primary Tag:</h3>
-        <input type="text" name="primaryTag" class="u-full-width" placeholder="Primary Tag">
-        <a href="#" id="searchPrimary" class="button button-primary u-full-width no-margin">Search</a>
-        
+
+   	<div class="center-containe align-center">
+    	<h3>Search Gifts:</h3>
+    	<input type="number" name="age" class="u-full-width" placeholder="Age">
+    	<input type="number" name="minPrice" class="u-full-width" placeholder="Minimum Price">
+    	<input type="number" name="maxPrice" class="u-full-width" placeholder="Maximum Price">
+    	<select name="gender">
+    	  <option value="">Select Gender</option>
+		  <option value="M">M</option>
+		  <option value="V">V</option>
+		</select>
+		<select name="event">
+		  <option value="">Select event</option>
+		  <option value="housewarming">House Warming</option>
+		  <option value="babyshower">Baby Shower</option>
+		</select>
+		<input type="text" name="primaryTag" class="u-full-width" placeholder="Primary Tag">
+    	<input type="text" name="secondaryTag" class="u-full-width" placeholder="Secondary Tag">
+        <a href="#" id="searchGift" class="button button-primary u-full-width no-margin">Search Gifts</a>
     </div>
+
     <div class="center-containe align-center">
-        <h3>Search Gifts Secondary Tag:</h3>
-        <input type="text" name="secondaryTag" class="u-full-width" placeholder="Secondary Tag">
-        <a href="#" id="searchSecondary" class="button button-primary u-full-width no-margin">Search</a>
-    </div>
-    {{#if searchPrimary}}
-        <div class="center-containe align-center">
-        <h3>Found gifts:</h3>
-        {{displayArray}}
-    	</div>
-    {{/if}}
-    
+    <h3>Found gifts:</h3>
+    	<table>
+    		<thead>
+    			<tr>
+    				<td>Naam</td>
+    				<td>Disc</td>
+    			</tr>
+    		</thead>
+    		<tbody>
+			 	{{#each secondSelectionArray}}
+			    	<tr>
+			    		<td>{{name}}</td>
+			    		<td>{{description}}</td>
+			    	</tr> 
+	    		{{/each}}
+    		</tbody>
+    	</table>
+	</div>
+
 </template>
 
