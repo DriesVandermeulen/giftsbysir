@@ -2,8 +2,9 @@ Gifts = new Mongo.Collection("gifts");
 
 Template.home.onCreated(function() {
 
-	this.firstSelectionArray = new ReactiveVar([]);
-	this.secondSelectionArray = new ReactiveVar([]);
+	this.results = new ReactiveVar([]);
+	this.search = {};
+	this.insertGift = {};
 
 	this.findByTag = function(search) {
 		var query = {$and: []};
@@ -12,21 +13,23 @@ Template.home.onCreated(function() {
 			query.$and.push({"age.max":{ $gte: search.age}});
 		}
 		if(search.price){
-			query.$and.push({"price":{
-									$and: [
-										{$gte: search.minPrice},
-										{$lte: search.maxPrice}
-									]}});
+			var price = {$and: []};
+			if (search.price.min){
+				price.$and.push({"price" : {$gte: search.price.min}})
+			}
+			if (search.price.max){
+				price.$and.push({"price" : {$lte: search.price.max}})
+			}
+			query.$and.push(price);
 		}
 		if(search.gender){
-			query.$and.push({"gender":{ 
-									$or: [
-										search.gender,
-										"N"
-									]}});
+			query.$and.push({$or: [
+										{"gender" : search.gender},
+										{"gender" : "N"}
+									]});
 		}
 		if(search.event){
-			query.$and.push({"event": search.event});
+			query.$and.push({"events.name": search.event});
 		}
 		if(search.primary){
 			query.$and.push({"tags.context.primary.name":{ $in: search.primary}});
@@ -34,9 +37,12 @@ Template.home.onCreated(function() {
 		if(search.secondary){
 			query.$and.push({"tags.context.secondary.name":{ $in: search.secondary}});
 		}
+		if(search.gifts) {
+			query.$and.push({"id":{ $in: search.gifts}});
+		}
 		return Gifts.find(query);
-
 	}
+
 	//print out collection with added gifts
 	console.log("Gifts after creation : " + Gifts.find().fetch());
 	console.log(Gifts.find().fetch());
@@ -47,13 +53,9 @@ Template.home.helpers({
         return Meteor.isAdmin()
     },
 
-    secondSelectionArray: function()  {
-    	return Template.instance().secondSelectionArray.get();
+    results: function()  {
+    	return Template.instance().results.get();
     },
-
-    firstSelectionArray: function()  {
-    	return Template.instance().firstSelectionArray.get();
-    }
 
 });
 
@@ -67,7 +69,7 @@ Template.home.events({
 
     'click #searchGift' : function(event, template) {
 
-    	var search = {};
+    	//var search = {};
 
     	var age = template.$('[name=age]').val();
     	var priceMin = template.$('[name=minPrice]').val();
@@ -78,28 +80,81 @@ Template.home.events({
 		var secondaryTagString = template.$('[name=secondaryTag]').val();
 
 		if(age) {
-			search.age = parseInt(age);
+			template.search.age = parseInt(age);
 		}
 		if(priceMin || priceMax) {
-			search.price = {
+			template.search.price = {
 				min: parseInt(priceMin),
 				max: parseInt(priceMax) 
 			}	
 		}
 		if(gender) {
-			search.gender = gender;	
+			template.search.gender = gender;	
 		}
 		if(event) {
-			search.event = event;	
+			template.search.event = event;	
 		}
 		if(primaryTagString) {
-			search.primary = primaryTagString.split(',');
+			template.search.primary = primaryTagString.split(',');
 		}
 		if(secondaryTagString) {
-			search.secondary = secondaryTagString.split(',');	
+			template.search.secondary = secondaryTagString.split(',');	
 		}
 
-    	template.secondSelectionArray.set(template.findByTag(search));
+    	template.results.set(template.findByTag(template.search));	
+    },
+
+    'click #saveResults' : function(event, template) {
+    	template.search.gifts = _.pluck(template.results.get().fetch(), '_id');
+
+    },
+
+    'click #addGift' : function(event, template) {
+
+    	var name = template.$('[name=name]').val();
+    	var description = template.$('[name=description]').val();
+    	var minAge = template.$('[name=minAge]').val();
+    	var maxAge = template.$('[name=maxAge]').val();
+		var price = template.$('[name=price]').val();
+		var gender = template.$('[name=genderInsert]').val();
+		var event = template.$('[name=eventInsert]').val();
+		var giftTag = template.$('[name=giftTagInsert]').val();
+		var primaryTagString = template.$('[name=primaryTagInsert]').val();
+		var secondaryTagString = template.$('[name=secondaryTagInsert]').val();
+
+		if(name) {
+			template.insertGift.name = name;
+		}
+		if(description) {
+			template.insertGift.description = description;
+		}
+		if(minAge || maxAge) {
+			template.insertGift.age = {
+				min: parseInt(minAge),
+				max: parseInt(maxAge) 
+			}	
+		}
+		if(price) {
+			template.insertGift.price = parseInt(price);
+		}
+		
+		if(gender) {
+			template.insertGift.gender = gender;	
+		}
+		if(event) {
+			template.insertGift.event = event;	
+		}
+		if(giftTag) {
+			template.insertGift.tags.gift.name = giftTag.split(',');
+		}
+		if(primaryTagString) {
+			template.insertGift.tags.context.primary.name = primaryTagString.split(',');
+		}
+		if(secondaryTagString) {
+			template.insertGift.tags.context.secondary.name = secondaryTagString.split(',');	
+		}
+
+		Gifts.insert(template.insertGift);
 
     }
 

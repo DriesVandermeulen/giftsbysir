@@ -53,16 +53,13 @@ Meteor.startup(function () {
                 context: [{
                     primary: {
                         name: "reading",
-                        tagId: 1
                     },
                     secondary: [
                     {
                         name: "best seller",
-                        tagId: 1
                     },
                     {
                         name: "bibliografie",
-                        tagId: 1
                     }]  
                 }]
             }
