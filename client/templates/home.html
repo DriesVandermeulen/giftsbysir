@@ -6,4 +6,97 @@
         {{/if}}
         <a class="button logout">Logout</a>
     </div>
+
+   	<div>
+
+	   	<div class="row">
+		    <div class="one-half column">
+		    	<h3>Search Gifts:</h3>
+		    	<input type="number" name="age" class="u-full-width" placeholder="Age">
+		    	<input type="number" name="minPrice" class="u-full-width" placeholder="Minimum Price">
+		    	<input type="number" name="maxPrice" class="u-full-width" placeholder="Maximum Price">
+		    	<select name="gender">
+		    	  <option value="">Select Gender</option>
+				  <option value="M">M</option>
+				  <option value="V">V</option>
+				</select>
+				<select name="event">
+				  <option value="">Select event</option>
+				  <option value="housewarming">House Warming</option>
+				  <option value="babyshower">Baby Shower</option>
+				</select>
+				<input type="text" name="primaryTag" class="u-full-width" placeholder="Primary Tag">
+		    	<input type="text" name="secondaryTag" class="u-full-width" placeholder="Secondary Tag">
+		        <a href="#" id="searchGift" class="button button-primary u-full-width no-margin">Search Gifts</a>
+				<a href="#" id="saveResults" class="button button-primary u-full-width no-margin">Save Results</a>
+
+		        <h3>Found gifts:</h3>
+		    	<table>
+		    		<thead>
+		    			<tr>
+		    				<td>Naam</td>
+		    				<td>Disc</td>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+					 	{{#each results}}
+					    	<tr>
+					    		<td>{{name}}</td>
+					    		<td>{{description}}</td>
+					    	</tr> 
+			    		{{/each}}
+		    		</tbody>
+		    	</table>
+		    </div>
+		    
+		    <div class="one-half column">
+		   		<h3>Add Gifts:</h3> 
+		   		<input type="text" name="name" class="u-full-width" placeholder="Name">
+		   		<textarea name="description" class="u-full-width">Description</textarea>
+		   		<input type="number" name="price" class="u-full-width" placeholder="Price">
+		    	<input type="number" name="minAge" class="u-full-width" placeholder="Minimum Age">
+		    	<input type="number" name="maxAge" class="u-full-width" placeholder="Maximum Age">
+		    	<select name="genderInsert">
+		    	  <option value="">Select Gender</option>
+				  <option value="M">M</option>
+				  <option value="V">V</option>
+				  <option value="N">N</option>
+				</select>
+				<!-- <select name="eventInsert">
+				  <option value="">Select event</option>
+				  <option value="housewarming">House Warming</option>
+				  <option value="babyshower">Baby Shower</option>
+				</select> -->
+				<input type="text" name="eventInsert" class="u-full-width" placeholder="Type Event">
+				<input type="text" name="giftTagInsert" class="u-full-width" placeholder="Gift Tags">
+				<input type="text" name="primaryTagInsert" class="u-full-width" placeholder="Primary Tag">
+		    	<input type="text" name="secondaryTagInsert" class="u-full-width" placeholder="Secondary Tag">
+		        <a href="#" id="addGift" class="button button-primary u-full-width no-margin">Add Gift</a>
+
+		        <h3>Added gifts:</h3>
+		    	<table>
+		    		<thead>
+		    			<tr>
+		    				<td>Naam</td>
+		    				<td>Disc</td>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+					 	{{#each secondSelectionArray}}
+					    	<tr>
+					    		<td>{{name}}</td>
+					    		<td>{{description}}</td>
+					    	</tr> 
+			    		{{/each}}
+		    		</tbody>
+		    	</table>
+		    </div>	
+		</div>
+	</div>
+
+    <div class="center-container align-center">
+    
+	</div>
+
 </template>
+

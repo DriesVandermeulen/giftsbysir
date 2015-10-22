@@ -1,0 +1,79 @@
+==========
+== Gift ==
+==========
+name: "",
+description: "",
+events: [{
+	name: "",
+	eventId: ID
+}],
+price: int,
+gender: 'M', 'V', 'N',
+age: {
+	min: int,
+	max: int
+},
+tags: {
+	gift: [{
+		name: ""
+		tagId: ID
+	}],
+	context: [{
+		primary: {
+			name: ""
+			tagId: ID
+		},
+		secondary [{
+			name: ""
+			photo: ""
+			tagID: ID
+		}]	
+	}]
+}
+boosts: [],
+cards: []
+
+===========
+=== Tag ===
+===========
+{
+	name: "",
+	photo: "",
+	type: ['CONTEXT_PRIMARY', 'CONTEXT_SECONDARY', 'GIFT']		
+}
+
+===========
+== Track ==
+===========
+receiver: "",
+event: {
+	name: "",
+	eventId: ID
+},
+price: {
+	min: int,
+	max: int
+},
+gender: 'M', 'V', 'N',
+age: int
+initial_gifts: [ID],
+answers: [
+	{
+		question: ID,
+		tags: [ID],
+		gifts: [ID]
+	}
+]
+
+==============
+== Question ==
+==============
+type: "primary | secondary",
+value: "Bla or bla?",
+option_tags: ['bla1', 'bla2']
+
+
+
+
+
+
