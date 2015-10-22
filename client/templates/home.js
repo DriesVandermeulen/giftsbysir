@@ -6,7 +6,10 @@ Template.home.onCreated(function() {
 
 	this.results = new ReactiveVar([]);
 	this.search = {};
-	
+	this.shownTag = new ReactiveVar("Nothing Yet");
+	this.primaryTags = Tags.find({type: "CONTEXT_PRIMARY"}).fetch();
+	this.selectedArray = [];
+	this.notSelectedArray = [];
 
 	this.findByTag = function(search) {
 		var query = {$and: []};
@@ -45,6 +48,14 @@ Template.home.onCreated(function() {
 		return Gifts.find(query);
 	}
 
+	this.getTag = function() {
+		var randomID = Math.floor(Math.random()*this.primaryTags.length);
+		var randomItem = this.primaryTags[randomID];
+		this.shownTag.set(randomItem.name);
+	}
+
+	this.getTag();
+
 	//print out collection with added gifts
 	console.log("Gifts after creation : " + Gifts.find().fetch());
 	console.log(Gifts.find().fetch());
@@ -58,6 +69,10 @@ Template.home.helpers({
     results: function()  {
     	return Template.instance().results.get();
     },
+
+    shownTag: function() {
+    	return Template.instance().shownTag.get();
+    }
 
 });
 
@@ -233,6 +248,39 @@ Template.home.events({
 			
 		}
 		var giftID = Gifts.insert(gift);
+
+    },
+
+    'click #addSelectedArray' : function(event, template) {
+
+    	template.selectedArray.push(template.shownTag.get()); 
+
+    	template.primaryTags = _.reject(template.primaryTags, function(el) { return el.name === template.shownTag.get(); });
+
+    	var randomID = Math.floor(Math.random()*template.primaryTags.length);
+    	var randomItem = template.primaryTags[randomID];
+    	if(randomItem){
+    		template.shownTag.set(randomItem.name);
+    		return;
+    	}
+    	template.shownTag.set("No more questions to ask")
+
+
+    },
+
+    'click #addNotSelectedArray' : function(event, template) {
+
+    	template.notSelectedArray.push(template.shownTag.get()); 
+
+    	template.primaryTags = _.reject(template.primaryTags, function(el) { return el.name === template.shownTag.get(); });
+
+    	var randomID = Math.floor(Math.random()*template.primaryTags.length);
+    	var randomItem = template.primaryTags[randomID];
+    	if(randomItem){
+    		template.shownTag.set(randomItem.name);
+    		return;
+    	}
+    	template.shownTag.set("No more questions to ask")
 
     }
 

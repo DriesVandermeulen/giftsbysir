@@ -7,7 +7,40 @@
         <a class="button logout">Logout</a>
     </div>
 
-   	<div>
+    <div class="center-containe align-center">
+
+		<!-- 
+		
+		PseudoCode: 
+
+		find all primary tags => in primaryTagsArray =  OK
+
+		var tagsShown = reactiveVAR = OK 
+		get random ID from length primaryTagsArray = OK 
+		set found TAG to reactive var tagShown = OK 
+		if selected => put in selectedArray = OK
+		if not selected => put in notselectedArray = OK
+		delete randomID from primaryTagsArray = OK
+		if enough show popup -->
+
+		<!-- reactive var -->
+		<h2>This is a random Primary Tag : {{shownTag}}</h2>
+		<div class="row">
+			<div class="one-half column">
+				<a href="#" id="addSelectedArray" class="button button-primary u-full-width no-margin">Great!</a>
+			</div>
+			<div class="one-half column">
+				<a href="#" id="addNotSelectedArray" class="button button-primary u-full-width no-margin">Nope!</a>
+			</div>
+		</div>
+		<br>
+		<a href="#" id="enough" class="button button-primary u-full-width no-margin">Enough!</a>
+    </div>
+
+
+
+
+   	<div style="display:none">
 
 	   	<div class="row">
 		    <div class="one-half column">
@@ -92,10 +125,6 @@
 		    	</table>
 		    </div>	
 		</div>
-	</div>
-
-    <div class="center-container align-center">
-    
 	</div>
 
 </template>
