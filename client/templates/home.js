@@ -1,10 +1,12 @@
 Gifts = new Mongo.Collection("gifts");
+Tags = new Mongo.Collection("tags");
+Events = new Mongo.Collection("events");
 
 Template.home.onCreated(function() {
 
 	this.results = new ReactiveVar([]);
 	this.search = {};
-	this.insertGift = {};
+	
 
 	this.findByTag = function(search) {
 		var query = {$and: []};
@@ -111,6 +113,7 @@ Template.home.events({
 
     'click #addGift' : function(event, template) {
 
+    	var gift = {};
     	var name = template.$('[name=name]').val();
     	var description = template.$('[name=description]').val();
     	var minAge = template.$('[name=minAge]').val();
@@ -118,43 +121,118 @@ Template.home.events({
 		var price = template.$('[name=price]').val();
 		var gender = template.$('[name=genderInsert]').val();
 		var event = template.$('[name=eventInsert]').val();
-		var giftTag = template.$('[name=giftTagInsert]').val();
+		var giftTagString = template.$('[name=giftTagInsert]').val();
 		var primaryTagString = template.$('[name=primaryTagInsert]').val();
 		var secondaryTagString = template.$('[name=secondaryTagInsert]').val();
 
 		if(name) {
-			template.insertGift.name = name;
+			gift.name = name;
 		}
 		if(description) {
-			template.insertGift.description = description;
+			gift.description = description;
 		}
 		if(minAge || maxAge) {
-			template.insertGift.age = {
+			gift.age = {
 				min: parseInt(minAge),
 				max: parseInt(maxAge) 
 			}	
 		}
 		if(price) {
-			template.insertGift.price = parseInt(price);
+			gift.price = parseInt(price);
 		}
 		
 		if(gender) {
-			template.insertGift.gender = gender;	
+			gift.gender = gender;	
 		}
 		if(event) {
-			template.insertGift.event = event;	
+			gift.events = [];
+			var eventTags = event.split(',');
+
+			_.each(eventTags, function(tagName){
+				var tag = Events.findOne({name: tagName});
+
+				if (!tag){
+					tag = {
+						name: tagName.trim(),
+					};
+					var id = Events.insert(tag);
+					tag = Events.findOne(id);
+				};
+				
+				gift.events.push(tag);
+
+			})
+			gift.event = [event];	
 		}
-		if(giftTag) {
-			template.insertGift.tags.gift.name = giftTag.split(',');
+		if(giftTagString) {
+			gift.tags = {};
+			gift.tags.gifts = [];
+
+			var giftTags = giftTagString.split(',');
+
+			_.each(giftTags, function(tagName){
+				var tag = Tags.findOne({name: tagName, type: "GIFTS"});
+
+				if (!tag){
+					tag = {
+						name: tagName.trim(),
+						type: "GIFTS"
+					};
+					var id = Tags.insert(tag);
+					tag = Tags.findOne(id);
+				};
+				
+				gift.tags.gifts.push(tag);
+
+			});
 		}
 		if(primaryTagString) {
-			template.insertGift.tags.context.primary.name = primaryTagString.split(',');
+			gift.tags.context = {};
+			gift.tags.context.primary = [];
+
+			var primaryTags = primaryTagString.split(',');
+
+			_.each(primaryTags, function(tagName){
+				var tag = Tags.findOne({name: tagName, type: "CONTEXT_PRIMARY"});
+
+				if (!tag){
+					tag = {
+						name: tagName.trim(),
+						type: "CONTEXT_PRIMARY"
+					};
+					var id = Tags.insert(tag);
+					tag = Tags.findOne(id);
+				};
+
+				gift.tags.context.primary.push(tag);
+
+			});
+
 		}
 		if(secondaryTagString) {
-			template.insertGift.tags.context.secondary.name = secondaryTagString.split(',');	
-		}
+			//gift.tags.context = {};
+			gift.tags.context.secondary = [];
 
-		Gifts.insert(template.insertGift);
+			var secondaryTags = secondaryTagString.split(',');
+
+			_.each(secondaryTags, function(tagName){
+				var tag = Tags.findOne({name: tagName, type: "CONTEXT_SECONDARY"});
+
+				if (!tag){
+					tag = {
+						name: tagName.trim(),
+						type: "CONTEXT_SECONDARY"
+					};
+					var id = Tags.insert(tag);
+					tag = Tags.findOne(id);
+				};
+
+				gift.tags.context.secondary.push(tag);
+
+			});
+			
+		}
+		var giftID = Gifts.insert(gift);
 
     }
 

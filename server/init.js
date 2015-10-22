@@ -30,7 +30,7 @@ Meteor.startup(function () {
 
     var Gifts = new Mongo.Collection("gifts");
 
-     if (Gifts.find().count() === 0) {
+    if (Gifts.find().count() === 0) {
         //insert Gift1 with 1 Gifts tag + Contact tags : 1 primary Tag and 2 SubTags | Housewarming
         Gifts.insert({
             name: "Gift1",
@@ -50,10 +50,10 @@ Meteor.startup(function () {
                     name: "book",
                     tagId: 1
                 }],
-                context: [{
-                    primary: {
+                context: {
+                    primary: [{
                         name: "reading",
-                    },
+                    }],
                     secondary: [
                     {
                         name: "best seller",
@@ -61,7 +61,7 @@ Meteor.startup(function () {
                     {
                         name: "bibliografie",
                     }]  
-                }]
+                }
             }
         });
 
@@ -84,11 +84,11 @@ Meteor.startup(function () {
                     name: "onderleggers",
                     tagId: 1
                 }],
-                context: [{
-                    primary: {
+                context: {
+                    primary: [{
                         name: "interior",
                         tagId: 1
-                    },
+                    }],
                     secondary: [
                     {
                         name: "design",
@@ -98,7 +98,7 @@ Meteor.startup(function () {
                         name: "modern",
                         tagId: 1
                     }]  
-                }]
+                }
             }
         });
 
@@ -121,7 +121,7 @@ Meteor.startup(function () {
                     name: "calender",
                     tagId: 1
                 }],
-                context: [{
+                context: {
                     primary: [{
                         name: "reading",
                         tagId: 1
@@ -134,7 +134,7 @@ Meteor.startup(function () {
                         name: "calender",
                         tagId: 1
                     }]  
-                }]
+                }
             }
         });
 
@@ -157,7 +157,7 @@ Meteor.startup(function () {
                     name: "calender",
                     tagId: 1
                 }],
-                context: [{
+                context: {
                     primary: [{
                         name: "reading",
                         tagId: 1
@@ -170,9 +170,26 @@ Meteor.startup(function () {
                         name: "calender",
                         tagId: 1
                     }]  
-                }]
+                }
             }
         });
+
+    }
+
+    var Tags = new Mongo.Collection("tags");
+
+    var Events = new Mongo.Collection("events");
+
+    var Questions = new Mongo.Collection("questions")
+
+    if (Questions.find().count() === 0) {
+
+        Questions.insert({
+            name: "Gift1",
+            secondaryTags: "",
+            description: "test"
+        })
+
 
     }
         
